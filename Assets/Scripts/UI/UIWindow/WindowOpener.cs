@@ -18,6 +18,7 @@ public class WindowOpener : CustomUIElement
     private void Awake()
     {
         window = null;
+        if(windowParentCanvas == null) windowParentCanvas = GameManager.Instance.windowCanvas;
     }
 
     public override void OnPointerDown(PointerEventData eventData)

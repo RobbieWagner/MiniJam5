@@ -13,7 +13,7 @@ public class UIWindow : CustomUIElement
     [SerializeField] private CustomUIElement topBar;
     [SerializeField] private CustomUIElement closeWindow;
     [SerializeField] private List<WindowContent> windowContent;
-    [SerializeField] private float CLOSE_WINDOW_SIZE = 20f;
+    [SerializeField] private float CLOSE_WINDOW_SIZE = 18f;
     [SerializeField] private float BORDER_SIZE = 2f;
     private readonly float TOP_BAR_HEIGHT = 23.5f;
 
@@ -74,6 +74,9 @@ public class UIWindow : CustomUIElement
 
     protected virtual void Awake()
     {
+        if(parentCanvas == null)
+            parentCanvas = GameManager.Instance.windowCanvas;
+
         if(parentCanvas != null)
             Initialize();
     }
@@ -103,6 +106,13 @@ public class UIWindow : CustomUIElement
         }
 
         TimescaleManager.Instance.OpenNewWindow(this);
+
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if(collider != null)
+        {
+            collider.offset = uiTransform.sizeDelta/2;
+            collider.size = uiTransform.sizeDelta;
+        }
     }
 
     private void Update()
@@ -111,18 +121,13 @@ public class UIWindow : CustomUIElement
         {
             Vector2 point;
             bool foundPos = RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvasT, Input.mousePosition, Camera.main, out point);
-            if(foundPos) uiTransform.localPosition = (Vector2) point; //- distanceMouseToWindow;
-            Debug.Log(point);
+            if(foundPos) uiTransform.localPosition = (Vector2) point - distanceMouseToWindow;
         }
     }
 
     private void LateUpdate()
     {
         Vector2 pos = uiTransform.anchoredPosition;
-
-        //TODO replace clamping values with camera boundaries
-        //pos.x = Mathf.Clamp(pos.x, 0 - uiTransform.sizeDelta.x/2, parentCanvasT.sizeDelta.x - uiTransform.sizeDelta.x/2);
-        //pos.y = Mathf.Clamp(pos.y, 0 - uiTransform.sizeDelta.y*4/5, parentCanvasT.sizeDelta.y - uiTransform.sizeDelta.y);
 
         uiTransform.anchoredPosition = pos;
     }
@@ -148,7 +153,7 @@ public class UIWindow : CustomUIElement
     protected virtual void OnDragWindow()
     {
         MovingWindow = true;
-        distanceMouseToWindow = uiTransform.sizeDelta; //((Vector2) Input.mousePosition -  uiTransform.anchoredPosition) *.59f;// - new Vector2(50, 50);
+        distanceMouseToWindow = new Vector2(uiTransform.sizeDelta.x/2, uiTransform.sizeDelta.y - 5); //((Vector2) Input.mousePosition -  uiTransform.anchoredPosition) *.59f;// - new Vector2(50, 50);
         transform.SetAsLastSibling();
     }
 

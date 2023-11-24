@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
-
-    [HideInInspector] public float gameSpeed = 1f;
-    public static GameManager Instance {get; private set;}
-    [SerializeField] public Canvas windowCanvas;
+    public static Player Instance {get; private set;}
 
     private void Awake()
     {

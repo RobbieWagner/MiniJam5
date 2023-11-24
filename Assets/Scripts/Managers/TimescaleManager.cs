@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TimescaleManager : MonoBehaviour
 {
-    [SerializeField] int windowLimit = 3;
     [SerializeField] private List<UIWindow> openWindows;
     [SerializeField] private List<float> gameSpeeds;
+    [HideInInspector] public float currentGameSpeed;
 
     public static TimescaleManager Instance {get; private set;}
 
@@ -43,7 +43,13 @@ public class TimescaleManager : MonoBehaviour
 
     private void UpdateGameSpeed()
     {
-        GameManager.Instance.gameSpeed = gameSpeeds[openWindows.Count];
-        Time.timeScale = gameSpeeds[openWindows.Count];
+        if(openWindows.Count < gameSpeeds.Count) currentGameSpeed = gameSpeeds[openWindows.Count];
+        else currentGameSpeed = gameSpeeds[gameSpeeds.Count - 1];
+
+        GameManager.Instance.gameSpeed = currentGameSpeed;
+        Time.timeScale = currentGameSpeed;
+        OnUpdateGameSpeed?.Invoke(openWindows.Count);
     }
+    public delegate void OnUpdateGameSpeedDelegate(int openDisplays);
+    public event OnUpdateGameSpeedDelegate OnUpdateGameSpeed;
 }
