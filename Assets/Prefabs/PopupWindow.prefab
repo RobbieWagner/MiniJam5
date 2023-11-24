@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2
+  m_PixelsPerUnitMultiplier: 3
 --- !u!114 &2874570960639814899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,8 +97,8 @@ MonoBehaviour:
   closeWindow: {fileID: 789850232095838180}
   windowContent:
   - {fileID: 5344242704932927879}
-  CLOSE_WINDOW_SIZE: 28
-  BORDER_SIZE: 3
+  CLOSE_WINDOW_SIZE: 18
+  BORDER_SIZE: 2
 --- !u!1 &2215377813200979267
 GameObject:
   m_ObjectHideFlags: 0

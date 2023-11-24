@@ -13,9 +13,9 @@ public class UIWindow : CustomUIElement
     [SerializeField] private CustomUIElement topBar;
     [SerializeField] private CustomUIElement closeWindow;
     [SerializeField] private List<WindowContent> windowContent;
-    [SerializeField] private float CLOSE_WINDOW_SIZE = 28f;
-    [SerializeField] private float BORDER_SIZE = 3f;
-    private readonly float TOP_BAR_HEIGHT = 32f;
+    [SerializeField] private float CLOSE_WINDOW_SIZE = 20f;
+    [SerializeField] private float BORDER_SIZE = 2f;
+    private readonly float TOP_BAR_HEIGHT = 23.5f;
 
     #region events
     private bool canMove = false;
@@ -83,7 +83,7 @@ public class UIWindow : CustomUIElement
         parentCanvasT = parentCanvas.GetComponent<RectTransform>();
 
         topBar.uiTransform.sizeDelta = new Vector2(uiTransform.sizeDelta.x - CLOSE_WINDOW_SIZE, TOP_BAR_HEIGHT);
-        closeWindow.uiTransform.sizeDelta = new Vector2(CLOSE_WINDOW_SIZE, TOP_BAR_HEIGHT);
+        closeWindow.uiTransform.sizeDelta = new Vector2(CLOSE_WINDOW_SIZE, CLOSE_WINDOW_SIZE);
 
         foreach(WindowContent w in windowContent)
             w.FormatContent(uiTransform, BORDER_SIZE, TOP_BAR_HEIGHT);
