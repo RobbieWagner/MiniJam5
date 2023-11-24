@@ -101,19 +101,28 @@ public class UIWindow : CustomUIElement
             closeWindow.OnMouseOverChanged += OnHoverCloseWindow;
             closeWindow.OnLMBClicked += OnCloseWindow;
         }
+
+        TimescaleManager.Instance.OpenNewWindow(this);
     }
 
     private void Update()
     {
-        if(movingWindow) uiTransform.anchoredPosition = (Vector2) Input.mousePosition - distanceMouseToWindow;
+        if(movingWindow) 
+        {
+            Vector2 point;
+            bool foundPos = RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvasT, Input.mousePosition, Camera.main, out point);
+            if(foundPos) uiTransform.localPosition = (Vector2) point; //- distanceMouseToWindow;
+            Debug.Log(point);
+        }
     }
 
     private void LateUpdate()
     {
         Vector2 pos = uiTransform.anchoredPosition;
 
-        pos.x = Mathf.Clamp(pos.x, 0 - uiTransform.sizeDelta.x/2, parentCanvasT.sizeDelta.x - uiTransform.sizeDelta.x/2);
-        pos.y = Mathf.Clamp(pos.y, 0 - uiTransform.sizeDelta.y*4/5, parentCanvasT.sizeDelta.y - uiTransform.sizeDelta.y);
+        //TODO replace clamping values with camera boundaries
+        //pos.x = Mathf.Clamp(pos.x, 0 - uiTransform.sizeDelta.x/2, parentCanvasT.sizeDelta.x - uiTransform.sizeDelta.x/2);
+        //pos.y = Mathf.Clamp(pos.y, 0 - uiTransform.sizeDelta.y*4/5, parentCanvasT.sizeDelta.y - uiTransform.sizeDelta.y);
 
         uiTransform.anchoredPosition = pos;
     }
@@ -139,7 +148,7 @@ public class UIWindow : CustomUIElement
     protected virtual void OnDragWindow()
     {
         MovingWindow = true;
-        distanceMouseToWindow = (Vector2) Input.mousePosition - uiTransform.anchoredPosition;
+        distanceMouseToWindow = uiTransform.sizeDelta; //((Vector2) Input.mousePosition -  uiTransform.anchoredPosition) *.59f;// - new Vector2(50, 50);
         transform.SetAsLastSibling();
     }
 
@@ -150,10 +159,11 @@ public class UIWindow : CustomUIElement
 
     protected virtual void OnCloseWindow()
     {
-        OnCloseThisWindow?.Invoke();
+        OnCloseThisWindow?.Invoke(this);
+        TimescaleManager.Instance.CloseWindow(this);
         Destroy(this.gameObject);
     }
-    public delegate void OnCloseWindowDelegate();
+    public delegate void OnCloseWindowDelegate(UIWindow window);
     public event OnCloseWindowDelegate OnCloseThisWindow;
 
     protected virtual void SetWindowInteractability(bool isInteractable)

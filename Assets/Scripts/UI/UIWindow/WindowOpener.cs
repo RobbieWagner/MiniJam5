@@ -48,11 +48,12 @@ public class WindowOpener : CustomUIElement
             window = Instantiate(windowPrefab, windowParentCanvas.transform);
             window.SetParentCanvas(windowParentCanvas);
             window.Initialize();
+            window.uiTransform.anchoredPosition = windowOpenLocation;
             window.OnCloseThisWindow += OnCloseWindow;
         }
     }
 
-    protected virtual void OnCloseWindow()
+    protected virtual void OnCloseWindow(UIWindow closedWindow)
     {
         window = null;
     }

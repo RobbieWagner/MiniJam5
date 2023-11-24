@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
+    [HideInInspector] public float gameSpeed = 1f;
     public static GameManager Instance {get; private set;}
 
     private void Awake()
