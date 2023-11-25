@@ -162,6 +162,11 @@ public class UIWindow : CustomUIElement
         MovingWindow = false;
     }
 
+    public virtual void CloseWindow()
+    {
+        OnCloseWindow();
+    }
+
     protected virtual void OnCloseWindow()
     {
         OnCloseThisWindow?.Invoke(this);

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using RobbieWagnerGames;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TimescaleManager : MonoBehaviour
 {
     [SerializeField] private List<UIWindow> openWindows;
     [SerializeField] private List<float> gameSpeeds;
     [HideInInspector] public float currentGameSpeed;
+    private PlayerInputActions inputActions;
 
     public static TimescaleManager Instance {get; private set;}
 
@@ -20,6 +24,8 @@ public class TimescaleManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+
+        inputActions = new PlayerInputActions();
     }
 
     public void OpenNewWindow(UIWindow window)
@@ -38,6 +44,15 @@ public class TimescaleManager : MonoBehaviour
         {
             openWindows.Remove(window);
             UpdateGameSpeed();
+        }
+    }
+
+    public void OnCloseAllWindows(InputValue inputValue)
+    {
+        List<UIWindow> windows = openWindows.Select(x => x).ToList();
+        foreach(UIWindow window in windows)
+        {
+            window.CloseWindow();
         }
     }
 

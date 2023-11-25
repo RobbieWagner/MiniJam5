@@ -53,6 +53,24 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ResetLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc3e5fc5-d10f-4f14-8ee8-925855b0bed1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseAllWindows"",
+                    ""type"": ""Button"",
+                    ""id"": ""4776d653-f521-4d04-a3ad-b3540c98445a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -242,6 +260,28 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
                     ""action"": ""NextDialogueLine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c25888e-e39a-4109-b7f5-8b12430e7414"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ad327f5-2215-4318-ac55-b848c0a5b84c"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseAllWindows"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -253,6 +293,8 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_Interact = m_Movement.FindAction("Interact", throwIfNotFound: true);
         m_Movement_NextDialogueLine = m_Movement.FindAction("NextDialogueLine", throwIfNotFound: true);
+        m_Movement_ResetLevel = m_Movement.FindAction("ResetLevel", throwIfNotFound: true);
+        m_Movement_CloseAllWindows = m_Movement.FindAction("CloseAllWindows", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +359,8 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_Interact;
     private readonly InputAction m_Movement_NextDialogueLine;
+    private readonly InputAction m_Movement_ResetLevel;
+    private readonly InputAction m_Movement_CloseAllWindows;
     public struct MovementActions
     {
         private @PlayerMovementActions m_Wrapper;
@@ -324,6 +368,8 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @Interact => m_Wrapper.m_Movement_Interact;
         public InputAction @NextDialogueLine => m_Wrapper.m_Movement_NextDialogueLine;
+        public InputAction @ResetLevel => m_Wrapper.m_Movement_ResetLevel;
+        public InputAction @CloseAllWindows => m_Wrapper.m_Movement_CloseAllWindows;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -342,6 +388,12 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
             @NextDialogueLine.started += instance.OnNextDialogueLine;
             @NextDialogueLine.performed += instance.OnNextDialogueLine;
             @NextDialogueLine.canceled += instance.OnNextDialogueLine;
+            @ResetLevel.started += instance.OnResetLevel;
+            @ResetLevel.performed += instance.OnResetLevel;
+            @ResetLevel.canceled += instance.OnResetLevel;
+            @CloseAllWindows.started += instance.OnCloseAllWindows;
+            @CloseAllWindows.performed += instance.OnCloseAllWindows;
+            @CloseAllWindows.canceled += instance.OnCloseAllWindows;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -355,6 +407,12 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
             @NextDialogueLine.started -= instance.OnNextDialogueLine;
             @NextDialogueLine.performed -= instance.OnNextDialogueLine;
             @NextDialogueLine.canceled -= instance.OnNextDialogueLine;
+            @ResetLevel.started -= instance.OnResetLevel;
+            @ResetLevel.performed -= instance.OnResetLevel;
+            @ResetLevel.canceled -= instance.OnResetLevel;
+            @CloseAllWindows.started -= instance.OnCloseAllWindows;
+            @CloseAllWindows.performed -= instance.OnCloseAllWindows;
+            @CloseAllWindows.canceled -= instance.OnCloseAllWindows;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -377,5 +435,7 @@ public partial class @PlayerMovementActions: IInputActionCollection2, IDisposabl
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnNextDialogueLine(InputAction.CallbackContext context);
+        void OnResetLevel(InputAction.CallbackContext context);
+        void OnCloseAllWindows(InputAction.CallbackContext context);
     }
 }

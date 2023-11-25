@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using RobbieWagnerGames;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     [HideInInspector] public float gameSpeed = 1f;
-    public static GameManager Instance {get; private set;}
     [SerializeField] public Canvas windowCanvas;
+    private PlayerInputActions inputActions;
+    public static GameManager Instance {get; private set;}
 
     private void Awake()
     {
@@ -20,5 +24,12 @@ public class GameManager : MonoBehaviour
         { 
             Instance = this; 
         } 
+
+        inputActions = new PlayerInputActions();
+    }
+
+    private void OnResetLevel(InputValue inputValue)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
