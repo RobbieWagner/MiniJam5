@@ -114,6 +114,7 @@ public class CharacterMovement2D : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log("new collision");
         colliders.Add(other.collider);
     }
 

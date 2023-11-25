@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public enum IconTag
@@ -7,7 +8,13 @@ public enum IconTag
     None = 0,
     Default = 1,
     CanUseBridge = 2,
+}
 
+public enum InteractionTag
+{
+    None,
+    FillCups,
+    NeedsWater,
 }
 
 public class FileIcon : MonoBehaviour

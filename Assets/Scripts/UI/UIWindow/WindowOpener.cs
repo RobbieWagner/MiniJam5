@@ -11,11 +11,11 @@ public class WindowOpener : CustomUIElement
     private Coroutine secondClickWait = null;
 
     [Header("Window")]
-    [SerializeField] private UIWindow windowPrefab;
+    [SerializeField] protected UIWindow windowPrefab;
     [SerializeField] private Vector2 windowOpenLocation;
     [SerializeField] private bool isLocationOffset = true;
-    [SerializeField] private Canvas windowParentCanvas;
-    private UIWindow window = null;
+    [SerializeField] protected Canvas windowParentCanvas;
+    protected UIWindow window = null;
 
     protected override void Awake()
     {
@@ -57,6 +57,7 @@ public class WindowOpener : CustomUIElement
             else window.transform.position = windowOpenLocation;
 
             window.OnCloseThisWindow += OnCloseWindow;
+            Debug.Log(window.gameObject.name);
         }
     }
 
