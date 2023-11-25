@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,11 +13,13 @@ public class WindowOpener : CustomUIElement
     [Header("Window")]
     [SerializeField] private UIWindow windowPrefab;
     [SerializeField] private Vector2 windowOpenLocation;
+    [SerializeField] private bool isLocationOffset = true;
     [SerializeField] private Canvas windowParentCanvas;
     private UIWindow window = null;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         window = null;
         if(windowParentCanvas == null) windowParentCanvas = GameManager.Instance.windowCanvas;
     }
@@ -44,12 +47,15 @@ public class WindowOpener : CustomUIElement
 
     protected virtual void TryOpenWindow()
     {
-        if(window == null)
+        if(window == null && WindowManager.Instance.CanOpenWindow(window))
         {
             window = Instantiate(windowPrefab, windowParentCanvas.transform);
             window.SetParentCanvas(windowParentCanvas);
             window.Initialize();
-            window.uiTransform.anchoredPosition = windowOpenLocation;
+
+            if(isLocationOffset) window.transform.position = transform.position + (Vector3) windowOpenLocation;
+            else window.transform.position = windowOpenLocation;
+
             window.OnCloseThisWindow += OnCloseWindow;
         }
     }

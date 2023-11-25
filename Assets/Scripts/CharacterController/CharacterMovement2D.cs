@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RobbieWagnerGames;
+using System.Security.Cryptography;
 
 public class CharacterMovement2D : MonoBehaviour
 {
@@ -19,15 +20,24 @@ public class CharacterMovement2D : MonoBehaviour
 
     private Vector3 lastFramePos = Vector3.zero;
 
+    [SerializeField][Range(-1, 0)] private float wallPushback = -.08f;
+    private HashSet<Collider2D> colliders;
+
     private void Awake()
     {
         inputActions = new PlayerInputActions();
+        colliders = new HashSet<Collider2D>();
     }
 
     private void LateUpdate() 
     {
 
-        if(canMove) transform.Translate(movementVector * currentWalkSpeed * Time.deltaTime);
+        if(canMove) 
+        {
+            transform.Translate(movementVector * currentWalkSpeed * Time.deltaTime);
+            foreach(Collider2D collider in colliders)
+                transform.position = Vector2.MoveTowards(transform.position, collider.transform.position, wallPushback);
+        }
 
         lastFramePos = transform.position;
 
@@ -100,5 +110,15 @@ public class CharacterMovement2D : MonoBehaviour
     public void StopMovementSounds()
     {
         footstepAudioSource.Stop();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        colliders.Add(other.collider);
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        colliders.Remove(other.collider);
     }
 }

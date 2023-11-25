@@ -25,7 +25,7 @@ public class GameHUD : MonoBehaviour
             Instance = this; 
         } 
 
-        TimescaleManager.Instance.OnUpdateGameSpeed += UpdatePerformanceDisplay;
+        WindowManager.Instance.OnUpdateGameSpeed += UpdatePerformanceDisplay;
         openWindowsImages = new List<Image>();
 
         UpdatePerformanceDisplay(0);

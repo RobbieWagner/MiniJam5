@@ -72,7 +72,7 @@ public class UIWindow : CustomUIElement
 
     private Vector2 distanceMouseToWindow;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         if(parentCanvas == null)
             parentCanvas = GameManager.Instance.windowCanvas;
@@ -105,7 +105,7 @@ public class UIWindow : CustomUIElement
             closeWindow.OnLMBClicked += OnCloseWindow;
         }
 
-        TimescaleManager.Instance.OpenNewWindow(this);
+        WindowManager.Instance.OpenNewWindow(this);
 
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
         if(collider != null)
@@ -170,7 +170,7 @@ public class UIWindow : CustomUIElement
     protected virtual void OnCloseWindow()
     {
         OnCloseThisWindow?.Invoke(this);
-        TimescaleManager.Instance.CloseWindow(this);
+        WindowManager.Instance.CloseWindow(this);
         Destroy(this.gameObject);
     }
     public delegate void OnCloseWindowDelegate(UIWindow window);

@@ -7,8 +7,9 @@ public class BridgeWindow : UIWindow
     private List<FileIcon> elementsCovered; 
     [SerializeField] private LayerMask ignoreLayers; 
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         elementsCovered = new List<FileIcon>();
     }
 
@@ -18,7 +19,6 @@ public class BridgeWindow : UIWindow
         if(element != null && element.iconTags.Contains(IconTag.CanUseBridge) && !elementsCovered.Contains(element))
         {
             elementsCovered.Add(element);
-            Debug.Log(element.gameObject.name);
             Physics2D.IgnoreCollision(Player.Instance.GetComponent<Collider2D>(), other);
         }
     }

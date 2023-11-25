@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 20252210371396869, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: m_Name
-      value: Water.png Variant
+      value: Water
       objectReference: {fileID: 0}
     - target: {fileID: 109887655457523056, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: m_Pivot.x
@@ -112,6 +112,14 @@ PrefabInstance:
       propertyPath: windowPrefab
       value: 
       objectReference: {fileID: 44609791743010525, guid: 727352975c96c4641b3c1cfe3e98e44c, type: 3}
+    - target: {fileID: 5548177035856185194, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
+      propertyPath: windowOpenLocation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5548177035856185194, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
+      propertyPath: windowOpenLocation.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8688494030691218862, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: m_Sprite
       value: 

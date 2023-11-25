@@ -28,6 +28,11 @@ public class CustomUIElement : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public delegate void OnMouseOverChangedDelegate(bool mouseOver);
     public event OnMouseOverChangedDelegate OnMouseOverChanged;
 
+    protected virtual void Awake()
+    {
+        if(uiTransform == null) uiTransform = GetComponent<RectTransform>();
+    }
+
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         IsMouseOver = true;

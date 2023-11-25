@@ -106,11 +106,11 @@ PrefabInstance:
       objectReference: {fileID: 44609791743010525, guid: 34827991ac7f12743899a032dec5757d, type: 3}
     - target: {fileID: 5548177035856185194, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: windowOpenLocation.x
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5548177035856185194, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: windowOpenLocation.y
-      value: 50
+      value: -95
       objectReference: {fileID: 0}
     - target: {fileID: 8688494030691218862, guid: b915b929513a962458e1a78f64e75dfe, type: 3}
       propertyPath: m_Sprite

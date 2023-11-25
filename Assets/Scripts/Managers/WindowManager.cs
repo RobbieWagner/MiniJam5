@@ -5,14 +5,15 @@ using RobbieWagnerGames;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TimescaleManager : MonoBehaviour
+public class WindowManager : MonoBehaviour
 {
-    [SerializeField] private List<UIWindow> openWindows;
+    [HideInInspector] public List<UIWindow> openWindows;
     [SerializeField] private List<float> gameSpeeds;
     [HideInInspector] public float currentGameSpeed;
     private PlayerInputActions inputActions;
+    [SerializeField] public int windowLimit = 5;
 
-    public static TimescaleManager Instance {get; private set;}
+    public static WindowManager Instance {get; private set;}
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public class TimescaleManager : MonoBehaviour
         } 
 
         inputActions = new PlayerInputActions();
+    }
+
+    public bool CanOpenWindow(UIWindow window)
+    {
+        return openWindows.Count < windowLimit;
     }
 
     public void OpenNewWindow(UIWindow window)
