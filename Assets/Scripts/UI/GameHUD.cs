@@ -11,6 +11,9 @@ public class GameHUD : MonoBehaviour
     private List<Image> openWindowsImages;
     [SerializeField] private Image openDisplayPrefab;
     private string PERFORMANCE_LABEL = "Performance: ";
+    [SerializeField] private TextMeshProUGUI timeText;
+    private float timeOrigin;
+    private float time;
 
     public static GameHUD Instance {get; private set;}
 
@@ -29,6 +32,15 @@ public class GameHUD : MonoBehaviour
         openWindowsImages = new List<Image>();
 
         UpdatePerformanceDisplay(0);
+        timeOrigin = Time.realtimeSinceStartup;
+        Debug.Log(Time.realtimeSinceStartup);
+        time = 0;
+    }
+
+    private void FixedUpdate()
+    {
+        time = Time.realtimeSinceStartup - timeOrigin;
+        timeText.text = ((int) time).ToString();
     }
 
     private void UpdatePerformanceDisplay(int openDisplays)
